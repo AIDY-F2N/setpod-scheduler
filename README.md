@@ -17,6 +17,9 @@ This open-source scheduler, `setpod-scheduler`, aims to address critical issues 
 
 - [Disadvantage of deploying an application pod by pod](#Disadvantage-of-deploying-an-application-pod-by-pod)
 - [Setpod-scheduler](#Setpod-scheduler)
+- [Deploy setpod-scheduler on a kubernetes cluster](#Deploy-setpod-scheduler-on-a-kubernetes-cluster)
+- [Use setpod-scheduler to deploy K8s applications](#Use-setpod-scheduler-to-deploy-K8s-applications)
+- [Example: Illustrating Deployment of setpod-scheduler in a Kind Cluster and Application Deployment](#Example:-Illustrating-Deployment-of-setpod-scheduler-in-a-Kind-Cluster-and-Application-Deployment)
 
 ## Disadvantage of deploying an application pod by pod
 
