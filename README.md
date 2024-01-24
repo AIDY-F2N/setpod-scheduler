@@ -31,7 +31,7 @@ For a given application of n pods, the default scheduler deploys the application
 
 
 <div align="center">
-    <img src="figures/firstdep.png" width="40%" height="40%" alt="Deployment of 3 pods out of 4.">
+    <img src="figures/firstdep.png" width="50%" height="50%" alt="Deployment of 3 pods out of 4.">
     <br>
     <em>Figure1. Deployment of 3 pods out of 4. </em>
 </div>
