@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: testpod1
+  labels:
+    name: twocontainerspod-example
+    serviceName: twocontainerspod
+    id: "1" #1/2
+    app_ad: "1" #application differentiator
+    nb_pods: "2" #number of pods in the application
+    #timelimit: "10" #the maximum delay for the scheduling algorithm to provide pod affectation 
+spec:
+  schedulerName: setpod-scheduler
+  #nodeSelector:
+    #restrictions : mysql
+  containers:
+  - name: redis
+    image: redis:5.0.3-alpine
+    #resources:
+      #limits:
+        #memory: 6000Mi
+        #cpu: 8
+      #requests:
+        #memory: 6000Mi
+        #cpu: 8
