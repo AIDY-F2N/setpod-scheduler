@@ -19,8 +19,9 @@ This open-source scheduler, `setpod-scheduler`, aims to address critical issues 
 - [Setpod-scheduler](#Setpod-scheduler)
 - [Deploy setpod-scheduler on a kubernetes cluster](#Deploy-setpod-scheduler-on-a-kubernetes-cluster)
 - [Use setpod-scheduler to deploy K8s applications](#Use-setpod-scheduler-to-deploy-K8s-applications)
-- [Example: Illustrating Deployment of setpod-scheduler in a Kind Cluster and Application Deployment](#Example-Illustrating-Deployment-of-setpod-scheduler-in-a-Kind-Cluster-and-Application-Deployment)
+- [Example1: Illustrating Deployment of setpod-scheduler in a Kind Cluster and Application Deployment](#Example1-Illustrating-Deployment-of-setpod-scheduler-in-a-Kind-Cluster-and-Application-Deployment)
 - [Accessing the setpod-scheduler Pod for Debugging](#Accessing-the-setpod-scheduler-Pod-for-Debugging)
+- [Example2: Deploy the OpenAirInterface 5G Core Network on a Kubernetes cluster using setpod-scheduler and Helm](#Example2-Deploy-the-OpenAirInterface-5G-Core-Network-on-a-Kubernetes-cluster-using-setpod-scheduler-and-Helm)
 - [Discussion](#Discussion)
 
 ## Disadvantage of deploying an application pod by pod
@@ -98,7 +99,7 @@ Here's an explanation of each label:
 
 - 'timelimit': The 'timelimit' label, when uncommented, signifies the maximum allowed time for the scheduling algorithm to find a suitable deployment or assignment solution for all the pods of the application. Adjust this value based on the allotted time for the scheduling algorithm to make better pod assignments.
 
-## Example: Illustrating Deployment of setpod-scheduler in a Kind Cluster and Application Deployment
+## Example1: Illustrating Deployment of setpod-scheduler in a Kind Cluster and Application Deployment
 
 In this example, we'll demonstrate the process of:
 
@@ -129,7 +130,7 @@ kubectl apply -f setpod-scheduler.yaml
 
 
 
-3. Deploy the 'twocontainerspod-example' application by deploying the two pods 'testPod1.yaml' and 'testPod2.yaml' located in the 'example' folder using the following two commands:
+3. Deploy the 'twocontainerspod-example' application by deploying the two pods 'testPod1.yaml' and 'testPod2.yaml' located in the 'example1' folder using the following two commands:
 
 ```bash[language=bash]
 kubectl apply -f testPod1.yaml
@@ -162,6 +163,59 @@ Once inside the pod, you can view the logs by running:
 cat std.log
 ```
 This will display the logs of the setpod-scheduler pod
+## Example2: Deploy the OpenAirInterface 5G Core Network on a Kubernetes cluster using setpod-scheduler and Helm
+
+In this example, we deploy the OpenAirInterface (OAI) core network. We use Open Air Interface (OAI) code (v1.5.1) which creates an open source and cloud-native platform that implements the 5G Release 16 Core Network virtual functions as pods on the top of a K8s cluster. A total of 8 pods ensure the operations of the OAI Core Network (MySQL, NRF, UDR, UDM, AUSF, AMF, SMF, SPGW-U). More details can be found at this link: [OpenAirInterface 5G Core Network Project](https://openairinterface.org/oai-5g-core-network-project/).
+
+The scheduling parameters are available in the "values.yaml" file of each pod. For example, the scheduling parameters for the AUSF pod in the file "/example2/oai-ausf/values.yaml" are:
+
+<div align="center">
+    <img src="figures/value.png">
+</div>
+
+1. Install the Helm CLI using this link: [Helm CLI Installation](https://helm.sh/docs/intro/install/).
+
+   Helm CLI (Command-Line Interface) is a command-line tool used for managing applications on Kubernetes clusters. It is part of the Helm package manager, which helps you package, deploy, and manage applications as reusable units called Helm charts.
+
+   Helm provides a straightforward way to define, install, and upgrade complex Kubernetes applications. With Helm, you can define the desired state of your application using a declarative YAML-based configuration file called a Helm chart. A Helm chart contains all the necessary Kubernetes manifests, configurations, and dependencies required to deploy and run your application.
+
+2. Install Helm Spray using this command: 
+   ```bash
+   helm plugin install https://github.com/ThalesGroup/helm-spray
+   ```
+Helm Spray is a Helm plugin that simplifies the deployment of Kubernetes applications using Helm charts. Helm is a package manager for Kubernetes that allows you to define, install, and manage applications as reusable units called charts. Helm Spray extends Helm's functionality by providing additional features and capabilities for managing the lifecycle of complex deployments. The command helm plugin install installs the Helm Spray plugin, enabling you to use its functionalities alongside Helm.
+
+3.  Create a namespace where the helm-charts will be deployed. In this example, we deploy them in the "oai" namespace. To create the "oai" namespace, use the following command on your cluster: 
+    ```bash[language=bash]
+    kubectl create ns oai
+    ```
+
+6. Open a terminal and run the following commands to deploy the OAI core:
+```bash[language=bash]
+helm dependency update example2/oai-5g-basic
+helm spray --timeout 300 --namespace oai example2/oai-5g-basic
+```
+The two commands are related to the Helm package manager and are used to manage and deploy Helm charts onto a Kubernetes cluster. After this, you can run this command to check the deployment of the pods:
+
+```bash[language=bash]
+watch kubectl get pods -n oai
+```
+The pods are deployed one by one in the order defined in the parameters following the "id".
+
+<div align="center">
+    <img src="figures/startdeploy.png">
+</div>
+
+setpod-scheduler either deploys all the pods or deploys none if the available resources are not sufficient. After a few seconds, if the pods are deployed, you get this:
+
+<div align="center">
+    <img src="figures/deployed.png" >
+</div>
+
+
+
+
+
 
 ## Discussion 
 setpod-scheduler is not part of the default Kubernetes installation. However, it can be configured and activated separately. Using setpod-schedule requires modification of the manifest of each pod in the application. it can be used to deploy different types of worklods (Deployment, StatefulSet, ...).  In
