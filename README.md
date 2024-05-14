@@ -118,7 +118,7 @@ nodes:
 ```
 To create a Kind cluster consisting of one control-plane and one worker node, use the following command:
 ```bash[language=bash]
-kind create cluster --config kind-config.yaml
+kind create cluster --name my-k8s-cluster --config kind-config.yaml
 ```
 
 
@@ -133,7 +133,7 @@ kubectl apply -f setpod-scheduler.yaml
 3. Deploy the 'twocontainerspod-example' application by deploying the two pods 'testPod1.yaml' and 'testPod2.yaml' located in the 'example1' folder using the following two commands:
 
 ```bash[language=bash]
-kubectl apply -f testPod1.yaml
+kubectl apply -f example1/testPod1.yaml
 ```
 
 <div align="center">
@@ -143,7 +143,7 @@ kubectl apply -f testPod1.yaml
 Then:
 
 ```bash[language=bash]
-kubectl apply -f testPod2.yaml
+kubectl apply -f example1/testPod2.yaml
 ```
 
 <div align="center">
@@ -222,3 +222,8 @@ setpod-scheduler is not part of the default Kubernetes installation. However, it
 addition, since setpod-scheduler works independently of the default Kubernetes scheduler,
 it is important to ensure that the use of setpod-scheduler has no impact on other types of workloads that
 do not use it. If you're interested in exploring the source code further or have any questions, please feel free to contact me directly.
+
+To delete the Kind cluster, use the following command:
+```bash[language=bash]
+kind delete cluster --name my-k8s-cluster
+```
