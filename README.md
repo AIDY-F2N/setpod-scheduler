@@ -8,6 +8,17 @@
 Coscheduling refers to the ability to schedule a group of pods at once, as opposed to the default Kubernetes behavior that schedules pods one-by-one.
 This open-source scheduler, `setpod-scheduler`, aims to address critical issues encountered when deploying multi-pods applications using Kubernetes' default scheduler. The default approach of deploying pods independently can lead to resource inefficiency and increased node utilization, ultimately affecting the overall cluster's performance and resource management.
 
+Here is the article to read for more details: [[Efficient Network Slicing Orchestrator for 5G Networks using a Genetic Algorithm-based Scheduler with Kubernetes: Experimental Insights].](https://ieeexplore.ieee.org/abstract/document/10588895)
+
+If you want to cite the article, here is the reference: @INPROCEEDINGS{10588895,
+  author={Ait Aba, Massinissa and Kassis, Maya and Elkael, Maxime and Araldo, Andrea and Khansa, Ali Al and Castel-Taleb, Hind and Jouaber, Badii},
+  booktitle={2024 IEEE 10th International Conference on Network Softwarization (NetSoft)}, 
+  title={Efficient Network Slicing Orchestrator for 5G Networks using a Genetic Algorithm-based Scheduler with Kubernetes: Experimental Insights}, 
+  year={2024},
+  volume={},
+  number={},
+  pages={82-90},
+  doi={10.1109/NetSoft60951.2024.10588895}}
 
 ## Contributor
 
