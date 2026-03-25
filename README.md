@@ -22,7 +22,7 @@ If you want to cite the article, here is the reference: @INPROCEEDINGS{10588895,
 
 ## Contributor
 
-- Massinissa AIT ABA, massinissa.ait-aba@davidson.fr
+- Massinissa AIT ABA, massinissa.ait_aba@telecom-sudparis.eu
 
 ## Table of Contents
 
